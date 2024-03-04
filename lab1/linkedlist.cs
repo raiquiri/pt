@@ -79,8 +79,30 @@ namespace ConsoleApp
         
         public void delete(int position)
         {
+            if (position < 0 || position >= count)
+            {
+                return;
+            }
+            if (position == 0 && head != null)
+            {
+                head = head.Next;
+                count--;
+                return;
+            }
+            Node prevNode = find(position - 1);
+            Node currentNode = find(position);
 
+            if (currentNode != null)
+            {
+                prevNode.Next = currentNode.Next;
+                count--;
+            }
         }
         
+        public void clear()
+        {
+            head = null;
+            count = 0;
+        }
     }
 }
