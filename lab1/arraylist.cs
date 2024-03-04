@@ -75,6 +75,7 @@ namespace ConsoleApp
             }
             buffer = newBuffer;
         }
+
         public void print()
         {
             for (int i = 0; i < lenght; i++)

@@ -104,5 +104,17 @@ namespace ConsoleApp
             head = null;
             count = 0;
         }
+
+        public void print()
+        {
+            Node currentNode = head;
+            while (currentNode != null)
+            {
+                Console.Write(currentNode.Data + " ");
+                currentNode = currentNode.Next;
+            }
+        }
+
+
     }
 }
