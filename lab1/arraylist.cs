@@ -32,6 +32,7 @@ namespace ConsoleApp
             if (position == lenght)
             {
                 add(item);
+                return;
             }
 
             if (buffer.Length == lenght)
@@ -54,7 +55,7 @@ namespace ConsoleApp
                 return;
             }
 
-            for (int i = position; i < lenght; i++)
+            for (int i = position; i < lenght - 1; i++)
             {
                 buffer[i] = buffer[i + 1];
             }
@@ -84,6 +85,7 @@ namespace ConsoleApp
             }
             Console.WriteLine();
         }
+        public int Count() { return lenght; }
         public int this[int index]
         {
             get

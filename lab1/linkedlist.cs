@@ -6,8 +6,8 @@ namespace ConsoleApp
     {
         class Node
         {
-            public int Data {set; get;}
-            public Node Next {set; get;}
+            public int Data { set; get; }
+            public Node Next { set; get; }
 
             public Node(int data, Node next)
             {
@@ -17,31 +17,34 @@ namespace ConsoleApp
 
         }
 
+        private Node head;
+        private int count;
+
         public LinkedList()
         {
-            Node head = null;
-            int count = 0;
+            head = null;
+            count = 0;
         }
 
-        Node find(int position)
+        private Node find(int position)
         {
-            if (position >= 0) {return null;}
+            if (position < 0) { return null; }
 
             int i = 0;
-            Node p = head;
-            while (p != null && i < position)
+            Node currenNode = head;
+            while (currenNode != null && i < position)
             {
-                p = p.Next;
+                currenNode = currenNode.Next;
                 i++;
             }
 
-            if (i == position) {return p;}
-            else {return null;}
+            if (i == position) { return currenNode; }
+            else { return null; }
         }
-        
+
         public void add(int item)
         {
-            Node newNode = new Node(item);
+            Node newNode = new Node(item, null);
 
             if (head == null)
             {
@@ -63,20 +66,20 @@ namespace ConsoleApp
             }
             if (position == 0)
             {
-                Node newNode = new Node(item);
+                Node newNode = new Node(item, null);
                 newNode.Next = head;
                 head = newNode;
             }
             else
             {
                 Node currentNode = find(position - 1);
-                Node newNode = new Node(item);
+                Node newNode = new Node(item, null);
                 newNode.Next = currentNode.Next;
                 currentNode.Next = newNode;
             }
             count++;
         }
-        
+
         public void delete(int position)
         {
             if (position < 0 || position >= count)
@@ -98,7 +101,7 @@ namespace ConsoleApp
                 count--;
             }
         }
-        
+
         public void clear()
         {
             head = null;
@@ -115,6 +118,26 @@ namespace ConsoleApp
             }
         }
 
-
+        public int Count() { return count; }
+        public int this[int index]
+        {
+            get
+            {
+                if (index < count || index >= 0)
+                {
+                    Node currentNode = find(index);
+                    return currentNode.Data;
+                }
+                return 0;
+            }
+            set
+            {
+                if (index < count || index >= 0)
+                {
+                    Node currentNode = find(index);
+                    currentNode.Data = value;
+                }
+            }
+        }
     }
 }
