@@ -2,10 +2,9 @@ using System;
 
 namespace ConsoleApp
 {
-    class ArrayList
+    class ArrayList : BaseList
     {
         private int[] buffer;
-        private int lenght;
 
         public ArrayList()
         {
@@ -13,7 +12,12 @@ namespace ConsoleApp
             buffer = new int[4];
         }
 
-        public void add(int item)
+        protected override BaseList emptyClone()
+        {
+            ArrayList arrayList = new ArrayList();
+            return arrayList;
+        }
+        public override void add(int item)
         {
             if (buffer.Length == lenght)
             {
@@ -23,7 +27,7 @@ namespace ConsoleApp
             lenght++;
         }
 
-        public void insert(int item, int position)
+        public override void insert(int item, int position)
         {
             if (position > lenght || position < 0)
             {
@@ -48,7 +52,7 @@ namespace ConsoleApp
             lenght++;
         }
 
-        public void delete(int position)
+        public override void delete(int position)
         {
             if (position >= lenght || position < 0)
             {
@@ -59,10 +63,11 @@ namespace ConsoleApp
             {
                 buffer[i] = buffer[i + 1];
             }
+            buffer[lenght] = 0;
             lenght--;
         }
 
-        public void clear()
+        public override void clear()
         {
             lenght = 0;
         }
@@ -77,7 +82,7 @@ namespace ConsoleApp
             buffer = newBuffer;
         }
 
-        public void print()
+        public override void print()
         {
             for (int i = 0; i < lenght; i++)
             {
@@ -85,8 +90,36 @@ namespace ConsoleApp
             }
             Console.WriteLine();
         }
-        public int Count() { return lenght; }
-        public int this[int index]
+
+        public void deleteRepeat()
+        {
+            if (lenght == 0)
+            {
+                return;
+            }
+
+            
+            for (int i = 0; i < lenght; i++)
+            {
+                bool check = true;
+                for (int j = i + 1; j < lenght; j++)
+                {
+                    if (this[i] == this[j])
+                    {
+                        delete(j);
+                        check = false;
+                        j--;
+                    }
+                }
+                if (!check)
+                {
+                    delete(i);
+                    i--;
+                }
+            }
+        }
+        
+        public override int this[int index]
         {
             get
             {
