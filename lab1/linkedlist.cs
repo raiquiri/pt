@@ -2,7 +2,7 @@ using System;
 
 namespace ConsoleApp
 {
-    class LinkedList
+    class LinkedList : BaseList
     {
         class Node
         {
@@ -18,12 +18,16 @@ namespace ConsoleApp
         }
 
         private Node head;
-        private int count;
+        protected override BaseList emptyClone()
+        {
+            ArrayList linkedList = new ArrayList();
+            return linkedList;
+        }
 
         public LinkedList()
         {
             head = null;
-            count = 0;
+            lenght = 0;
         }
 
         private Node find(int position)
@@ -42,7 +46,7 @@ namespace ConsoleApp
             else { return null; }
         }
 
-        public void add(int item)
+        public override void add(int item)
         {
             Node newNode = new Node(item, null);
 
@@ -52,15 +56,15 @@ namespace ConsoleApp
             }
             else
             {
-                Node tail = find(count - 1);
+                Node tail = find(lenght - 1);
                 tail.Next = newNode;
             }
-            count++;
+            lenght++;
         }
 
-        public void insert(int item, int position)
+        public override void insert(int item, int position)
         {
-            if (position < 0 || position > count)
+            if (position < 0 || position > lenght)
             {
                 return;
             }
@@ -77,19 +81,19 @@ namespace ConsoleApp
                 newNode.Next = currentNode.Next;
                 currentNode.Next = newNode;
             }
-            count++;
+            lenght++;
         }
 
-        public void delete(int position)
+        public override void delete(int position)
         {
-            if (position < 0 || position >= count)
+            if (position < 0 || position >= lenght)
             {
                 return;
             }
             if (position == 0 && head != null)
             {
                 head = head.Next;
-                count--;
+                lenght--;
                 return;
             }
             Node prevNode = find(position - 1);
@@ -98,17 +102,17 @@ namespace ConsoleApp
             if (currentNode != null)
             {
                 prevNode.Next = currentNode.Next;
-                count--;
+                lenght--;
             }
         }
 
-        public void clear()
+        public override void clear()
         {
             head = null;
-            count = 0;
+            lenght = 0;
         }
 
-        public void print()
+        public override void print()
         {
             Node currentNode = head;
             while (currentNode != null)
@@ -118,21 +122,49 @@ namespace ConsoleApp
             }
         }
 
-        public int Count() { return count; }
-        public int this[int index]
+        public void deleteRepeat()
+        {
+            if (head == null)
+            {
+                return;
+            }
+
+            
+            for (int i = 0; i < lenght; i++)
+            {
+                bool check = true;
+                
+                for (int j = i + 1; j < lenght; j++)
+                {
+                    if (this[i] == this[j])
+                    {
+                        delete(j);
+                        check = false;
+                        j--;
+                    }
+                }
+                if (!check)
+                {
+                    delete(i);
+                    i--;
+                }
+            }
+        }
+
+        public override int this[int index]
         {
             get
             {
-                if (index < count || index >= 0)
+                if (index < lenght || index >= 0)
                 {
                     Node currentNode = find(index);
-                    return currentNode.Data;
+                    return currentNode.Data;   
                 }
                 return 0;
             }
             set
             {
-                if (index < count || index >= 0)
+                if (index < lenght || index >= 0)
                 {
                     Node currentNode = find(index);
                     currentNode.Data = value;
