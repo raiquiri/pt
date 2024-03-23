@@ -26,8 +26,8 @@ namespace ConsoleApp
 
         public LinkedList()
         {
-            head = null;
             lenght = 0;
+            head = null;
         }
 
         private Node find(int position)

@@ -63,7 +63,6 @@ namespace ConsoleApp
             {
                 buffer[i] = buffer[i + 1];
             }
-            buffer[lenght] = 0;
             lenght--;
         }
 
